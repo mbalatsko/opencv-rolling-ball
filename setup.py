@@ -3,12 +3,17 @@ from setuptools import find_packages, setup
 
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
+with open('README.md') as f:
+    long_description = f.read()
+
 setup(
     name='opencv-rolling-ball',
     packages=find_packages(),
     version='1.0',
     description='Fully Ported to Python from ImageJ\'s Background Subtractor.'
                 'Only works for 8-bit greyscale images currently. ',
+	long_description=long_description,
+    long_description_content_type='text/markdown',
     license='MIT License',
     author='Maksym Balatsko',
     author_email='mbalatsko@gmail.com',
