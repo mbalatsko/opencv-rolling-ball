@@ -1,5 +1,10 @@
 # Rolling ball and sliding paraboloid background subtraction algorithms 
 
+[![PyPI version](https://badge.fury.io/py/opencv-rolling-ball.svg)](https://badge.fury.io/py/opencv-rolling-ball)
+[![Downloads](https://pepy.tech/badge/opencv-rolling-ball)](https://pepy.tech/project/pypylon-opencv-viewer)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+
 Fully Ported to Python from ImageJ's Background Subtractor.
 Only works for 8-bit greyscale images currently.
 Based on the concept of the rolling ball algorithm described
