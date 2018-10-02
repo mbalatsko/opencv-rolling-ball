@@ -9,16 +9,15 @@ with open('README.md') as f:
 setup(
     name='opencv-rolling-ball',
     packages=find_packages(),
-    version='1.0',
-    description='Fully Ported to Python from ImageJ\'s Background Subtractor.'
-                'Only works for 8-bit greyscale images currently. ',
+    version='1.0.1',
+    description='Now function returns both result image and subtracted background',
 	long_description=long_description,
     long_description_content_type='text/markdown',
     license='MIT License',
     author='Maksym Balatsko',
     author_email='mbalatsko@gmail.com',
     url='https://github.com/mbalatsko/opencv-rolling-ball',
-    download_url='https://github.com/mbalatsko/opencv-rolling-ball/archive/1.0.tar.gz',
+    download_url='https://github.com/mbalatsko/opencv-rolling-ball/archive/1.0.1.tar.gz',
     install_requires=[
           'opencv-python',
           'numpy'

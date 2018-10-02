@@ -16,25 +16,33 @@ http://rsbweb.nih.gov/ij/developer/source/ij/plugin/filter/BackgroundSubtracter.
 
 
 def subtract_background_rolling_ball(img, radius, light_background=True,
-                                     use_paraboloid=False, do_presmooth=True,
-                                     create_background=False):
+                                     use_paraboloid=False, do_presmooth=True):
     """
     Calculates and subtracts or creates background from image.
-    Arguments:
-    :param img - uint8 np array representing image
-    :param radius - Radius of the rolling ball creating the background (actually a
+
+    Parameters
+    ----------
+    img : uint8 np array
+        Image
+    radius : int
+        Radius of the rolling ball creating the background (actually a
                       paraboloid of rotation with the same curvature)
-    :param light_background - Whether the image has a light background.
-    :param do_presmooth - Whether the image should be smoothened (3x3 mean) before creating
+    light_background : bool
+        Whether the image has a light background.
+    do_presmooth : bool
+        Whether the image should be smoothened (3x3 mean) before creating
                       the background. With smoothing, the background will not necessarily
                       be below the image data.
-    :param create_background - Whether to create a background, not to subtract it.
-    :param use_paraboloid - Whether to use the "sliding paraboloid" algorithm.
+    use_paraboloid : bool
+        Whether to use the "sliding paraboloid" algorithm.
 
-    :return img - uint8 np array representing background subtracted image
+    Returns
+    -------
+    img, background : uint8 np array
+        Background subtracted image, Background
     """
     bs = BackgroundSubtract()
-    return bs.rolling_ball_background(img, radius, light_background, use_paraboloid, do_presmooth, create_background)
+    return bs.rolling_ball_background(img, radius, light_background, use_paraboloid, do_presmooth)
 
 
 class BackgroundSubtract:
@@ -53,22 +61,30 @@ class BackgroundSubtract:
         self.s_height = 0
 
     def rolling_ball_background(self, img, radius, light_background=True,
-                                use_paraboloid=False, do_presmooth=True,
-                                create_background=False):
+                                use_paraboloid=False, do_presmooth=True):
         """
-        Calculates and subtracts background from array.
-        Arguments:
-        :param img - uint8 np array representing image
-        :param radius - Radius of the rolling ball creating the background (actually a
+        Calculates and subtracts or creates background from image.
+
+        Parameters
+        ----------
+        img : uint8 np array
+            Image
+        radius : int
+            Radius of the rolling ball creating the background (actually a
                           paraboloid of rotation with the same curvature)
-        :param light_background - Whether the image has a light background.
-        :param do_presmooth - Whether the image should be smoothened (3x3 mean) before creating
+        light_background : bool
+            Whether the image has a light background.
+        do_presmooth : bool
+            Whether the image should be smoothened (3x3 mean) before creating
                           the background. With smoothing, the background will not necessarily
                           be below the image data.
-        :param create_background - Whether to create a background, not to subtract it.
-        :param use_paraboloid - Whether to use the "sliding paraboloid" algorithm.
+        use_paraboloid : bool
+            Whether to use the "sliding paraboloid" algorithm.
 
-        :return img - uint8 np array representing background subtracted image
+        Returns
+        -------
+        img, background : uint8 np array
+        Background subtracted image, Background
 
         """
         self.height, self.width = img.shape
@@ -94,8 +110,7 @@ class BackgroundSubtract:
         else:
             float_img = self._rolling_ball_float_background(float_img, invert, ball)
 
-        if create_background:
-            return float_img.astype('uint8').reshape((self.height, self.width))
+        background = float_img.astype('uint8').reshape((self.height, self.width))
 
         offset = 255.5 if invert else 0.5
         for p in range(0, self.width*self.height):
@@ -103,7 +118,7 @@ class BackgroundSubtract:
             value = max((value, 0))
             value = min((value, 255))
             img[int(p / self.width), int(p % self.width)] = value
-        return img
+        return img, background
 
     def _smooth(self, img, window=3):
         """
